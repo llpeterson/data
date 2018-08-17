@@ -406,7 +406,7 @@ and a multibyte `length`.
 
 Network Data Representation (NDR) is the data-encoding standard used in
 the Distributed Computing Environment (DCE, which we introduced in an
-earlier chapter. Unlike XDR and ASN.1, NDR uses receiver-makes-right. It
+earlier chapter). Unlike XDR and ASN.1, NDR uses receiver-makes-right. It
 does this by inserting an architecture tag at the front of each message;
 individual data items are untagged. NDR uses a compiler to generate
 stubs. This compiler takes a description of a program written in the

@@ -344,16 +344,26 @@ the DCT is to separate the gross features, which are essential to
 viewing the image, from the fine detail, which is less essential and, in
 some cases, might be barely perceived by the eye.
 
-DCT, along with its inverse, which is performed during decompression, is
-defined by the following formulas:
+DCT, along with its inverse, which recovers the original pixels and
+during decompression, are defined by the following formulas:
 
-```pseudo
-DCT(i,j) = ...
-```
+$$
+\begin{aligned}
+DCT(i,j) &=&  \frac{1}{\sqrt{2N}} C(i) C(j) \sum_{x=0}^{N-1}
+ \sum_{y=0}^{N-1} pixel(x, y) 
+ \cos \left[ \frac{(2x+1)i \pi}{2N}\right]
+ \cos \left[ \frac{(2y+1)j \pi}{2N}\right]\\
+\mathit{pixel}(x,y) &=&  \frac{1}{\sqrt{2N}} \sum_{i=0}^{N-1}
+ \sum_{j=0}^{N-1} C(i) C(j) DCT(i, j) 
+ \cos \left[ \frac{(2x+1)i \pi}{2N}\right]
+ \cos \left[ \frac{(2y+1)j \pi}{2N}\right]
+\end{aligned}
+$$
 
-where pixel$$(x,y)$$ is the grayscale value of the pixel at position
-$$(x,y)$$ in the 8 $$\times$$ 8 block being compressed; N = 8 in this
-case.
+where $$C(x) = 1/\sqrt{2}$$ when $$x=0$$ and $$1$$ when
+$$x>0$$, and $$pixel(x,y)$$ is the grayscale value of the
+pixel at position $$(x,y)$$ in the 8 $$\times$$ 8 block being
+compressed; N = 8 in this case.
 
 The first frequency coefficient, at location (0,0) in the output matrix,
 is called the *DC coefficient*. Intuitively, we can see that the DC

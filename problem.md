@@ -10,16 +10,16 @@ each other. Each of these messages is just an uninterpreted string of
 bytes. From the application's perspective, however, these messages
 contain various kinds of *data*—arrays of integers, video frames,
 lines of text, digital images, and so on. In other words, these bytes
-have meaning. We now consider the prob-lem of how best to encode the
+have meaning. We now consider the problem of how best to encode the
 different kinds of data that application programs want to exchange into
 byte strings. In many respects, this is similar to the problem of
 encoding byte strings into electromagnetic signals that we saw in an
 earlier chapter.
 
-Thinking back to our discussion of encoding, there were essentially two
-concerns. The first was that the receiver be able to extract the same
-message from the sig-nal as the transmitter sent; this was the framing
-problem. The second was making the encoding as efficient as possible.
+Thinking back to our discussion of encoding, there are essentially two
+concerns. The first is that the receiver be able to extract the same
+message from the signal as the transmitter sent; this is the framing
+problem. The second is making the encoding as efficient as possible.
 Both of these concerns are also present when encoding application data
 into network messages.
 
@@ -62,7 +62,7 @@ high frequencies as well as lower ones, and we don't notice fine detail
 as much as the bigger picture in an image, especially if the image is
 moving.
 
-Compression is important to the designers of networks for a wealth of
+Compression is important to the designers of networks for many
 reasons, not just because we rarely find ourselves with an abundance of
 bandwidth everywhere in the network. For example, the way we design a
 compression algorithm affects our sensitivity to lost or delayed data
@@ -80,5 +80,5 @@ manipulation* functions. This is in contrast to most of the protocols we
 have seen up to this point, which process a message without ever looking
 at its contents. Because of this need to read, compute on, and write
 every byte of data in a message, data manipulations affect end-to-end
-throughput over the network. In fact, these manipulations can be the
-limiting factor.
+throughput over the network. In some cases, these manipulations can be
+the limiting factor.

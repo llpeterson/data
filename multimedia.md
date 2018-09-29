@@ -667,26 +667,31 @@ to keep pace with 30-frames-per-second video rates when decoding MPEG
 streams purely in software—modern processors can even decode MPEG
 streams of high definition video (HDTV).
 
-### Other Video Encoding Standards
+### Video Encoding Standards
 
-We conclude by noting that MPEG is not by any means the only standard
-available for encoding video. For example, the ITU-T has also defined
-the *H series* for encoding real-time multimedia data. Generally, the H
-series includes standards for video, audio, control, and multiplexing
-(e.g., mixing audio, video, and data onto a single bit stream). Within
-the series, H.261 and H.263 are the first- and second-generation video
-encoding standards. Unlike early versions of MPEG, which is targeted at
-bit rates on the order of 1.5 Mbps, H.261 and H.263 are targeted at
-lower speeds. Designed for the Integrated Services Digital Network
-(ISDN) standards, they support video over links with bandwidth available
-in 64-kbps increments. In principle, both H.261 and H.263 look a lot
-like MPEG: They use DCT, quantization, and interframe compression. The
-differences between H.261/H.263 and MPEG are in the details. In fact,
-the newer H.264 standard is also part of the MPEG-4 standard. As video
-become supported on more and more devices ranging from small-screen
-devices connected over low-bandwidth cellular wireless links to large
-TVs connected to high-bandwidth fiber links, there is likely to be more
-demand for innovation and new standards in this space.
+We conclude by noting that MPEG is an evolving standard of significant
+complexity. This complexity comes from a desire to give the encoding
+algorithm every possible degree of freedom in how it encodes a given
+video stream, resulting in different video transmission rates. It also
+comes from the evolution of the standard over time, with the Moving
+Picture Experts Group working hard to retain backwards compatibility
+(e.g., MPEG-1, MPEG-2, MPEG-4). What we describe in this book is the
+essential ideas underlying MPEG-based compression, but certainly not
+all the intricacies involved in an international standard.
+
+What's more, MPEG is not the only standard available for encoding
+video. For example, the ITU-T has also defined the *H series*
+for encoding real-time multimedia data. Generally, the H series
+includes standards for video, audio, control, and multiplexing (e.g.,
+mixing audio, video, and data onto a single bit stream). Within the
+series, H.261 and H.263 were the first- and second-generation video
+encoding standards. In principle, both H.261 and H.263 look a lot 
+like MPEG: They use DCT, quantization, and interframe compression. The 
+differences between H.261/H.263 and MPEG are in the details.
+
+Today, a partnership between the ITU-T and the MPEG group has lead to
+the joint H.264/MPEG-4 standard, which is used for both Blu-ray Discs
+and by many popular streaming sources (e.g., YouTube, Vimeo).
 
 ## Transmitting MPEG over a Network
 
@@ -696,18 +701,13 @@ Focusing on MPEG, the first thing to keep in mind is that it defines the
 format of a video *stream*; it does not specify how this stream is
 broken into network packets. Thus, MPEG can be used for videos stored on
 disk, as well as videos transmitted over a stream-oriented network
-connection, like that provided by TCP. More on how you might packetize
-an MPEG stream in a moment.
+connection, like that provided by TCP.
 
-The MPEG format is one of the most complicated of any protocols
-discussed in this book. This complication comes from a desire to give
-the encoding algorithm every possible degree of freedom in how it
-encodes a given video stream. It also comes from the evolution of the
-standard over time (i.e., MPEG-1, MPEG-2, MPEG-4). What we describe
-below is called the *main profile* of an MPEG-2 video stream. You can
-think of an MPEG profile as being analogous to a "version," except the
-profile is not explicitly specified in an MPEG header; the receiver has
-to deduce the profile from the combination of header fields it sees.
+What we describe below is called the *main profile* of an MPEG video
+stream that is being sent over a network. You can think of an MPEG
+profile as being analogous to a "version," except the profile is not
+explicitly specified in an MPEG header; the receiver has to deduce the
+profile from the combination of header fields it sees.
 
 <figure class="line">
 	<a id="nested"></a>
@@ -715,7 +715,7 @@ to deduce the profile from the combination of header fields it sees.
 	<figcaption>Format of an MPEG-compressed video stream.</figcaption>
 </figure>
 
-A main profile MPEG-2 stream has a nested structure, as illustrated in
+A main profile MPEG stream has a nested structure, as illustrated in
 [Figure 6](#nested). (Keep in mind that this figure hides a *lot* of
 messy details.) At the outermost level, the video contains a sequence of
 groups of pictures (GOP) separated by a `SeqHdr`. The sequence is

@@ -27,18 +27,20 @@ message.
 You might ask what makes this problem challenging enough to warrant a
 name like marshalling. One reason is that computers represent data in
 different ways. For example, some computers represent floating-point
-numbers in IEEE standard 754 format, while other machines still use
+numbers in IEEE standard 754 format, while some older machines still use
 their own nonstandard format. Even for something as simple as integers,
 different architectures use different sizes (e.g., 16-bit, 32-bit,
 64-bit). To make matters worse, on some machines integers are
 represented in *big-endian* form (the most significant bit of a word is
 in the byte with the highest address), while on other machines integers
 are represented in *little-endian* form (the most significant bit is in
-the byte with the lowest address). The MIPS and
-PowerPC processors are examples of big-endian machines,
-and the Intel x86 family is an example of a little-endian
-architecture. The big-endian and little-endian representations of the
-integer 34,677,374 are given in [Figure 2](#endian).
+the byte with the lowest address). For example, PowerPC processors are
+big-endian machines, and the Intel x86 family is a little-endian
+architecture. Today, many architectures support both representations
+(and so are called *bi-endian*), but the point is that you can never be
+sure how the host you are communicating with stores integers. The
+big-endian and little-endian representations of the integer 34,677,374
+are given in [Figure 2](#endian).
 
 <figure class="line">
 	<a id="endian"></a>
@@ -60,13 +62,12 @@ in the structure differently.
 
 ## Taxonomy
 
-Although anyone who has worked on argument marshalling would tell you
-that no rocket science is involved—it is a small matter of bit
-twiddling—there are a surprising number of design choices that you
-must address. We begin by giving a simple taxonomy for argument
-marshalling systems. The following is by no means the only viable
-taxonomy, but it is sufficient to cover most of the interesting
-alternatives.
+Although argument marshalling is not rocket science is involved—it is
+a small matter of bit twiddling—there are a surprising number of
+design choices that you must address. We begin by giving a simple
+taxonomy for argument marshalling systems. The following is by no
+means the only viable taxonomy, but it is sufficient to cover most of
+the interesting alternatives.
 
 ### Data Types
 
@@ -152,7 +153,7 @@ one.
 
 Using a common external format is clearly the correct thing to do,
 right? This has certainly been the conventional wisdom in the networking
-community for the past 25 years. The answer is not cut and dried,
+community for over 30 years. The answer is not cut and dried,
 however. It turns out that there are not that many different
 representations for the various base classes, or, said another way, N
 is not that large. In addition, the most common case is for two machines
@@ -405,14 +406,13 @@ and a multibyte `length`.
 ### NDR
 
 Network Data Representation (NDR) is the data-encoding standard used in
-the Distributed Computing Environment (DCE, which we introduced in an
-earlier chapter). Unlike XDR and ASN.1, NDR uses receiver-makes-right. It
-does this by inserting an architecture tag at the front of each message;
-individual data items are untagged. NDR uses a compiler to generate
-stubs. This compiler takes a description of a program written in the
-Interface Definition Language (IDL) and generates the necessary stubs.
-IDL looks pretty much like C, and so essentially supports the C-type
-system.
+the Distributed Computing Environment (DCE). Unlike XDR and ASN.1, NDR
+uses receiver-makes-right. It does this by inserting an architecture
+tag at the front of each message; individual data items are
+untagged. NDR uses a compiler to generate stubs. This compiler takes a
+description of a program written in the Interface Definition Language
+(IDL) and generates the necessary stubs. IDL looks pretty much like C,
+and so essentially supports the C-type system.
 
 <figure class="line">
 	<a id="ndr"></a>
@@ -447,22 +447,23 @@ Language (HTML), which indicates that certain character strings should
 be displayed in bold or italics, what font type and size should be used,
 and where images should be positioned.
 
-The enormous popularity of the Web and the availability of all sorts of
-applications and data on it have also created a situation in which
-different Web applications need to communicate with each other and
-understand each other's data. For example, an e-commerce website might
-need to talk to a shipping company's website to allow a customer to
-track a package without ever leaving the e-commerce website. This in
-fact starts to look a lot more like RPC, and the approach taken in the
-Web today to enable such communication among web servers is based on the
-*Extensible Markup Language* (XML).
+The availability of all sorts of Web applications and data have
+also created a situation in which different Web applications need to
+communicate with each other and understand each other's data. For
+example, an e-commerce website might need to talk to a shipping
+company's website to allow a customer to track a package without ever
+leaving the e-commerce website. This quickly starts to look a lot
+like RPC, and the approach taken in the Web today to enable such
+communication among web servers is based on the *Extensible Markup
+Language* (XML)—a way to describe the data being exchanged between
+Web apps.
 
 Markup languages, of which HTML and XML are both examples, take the
 tagged data approach to the extreme. Data is represented as text, and
 text tags known as *markup* are intermingled with the data text to
-express information about the data. In the case of HTML, markup merely
-indicates how the text should be displayed; other markup languages like
-XML can express the type and structure of the data.
+express information about the data. In the case of HTML, markup
+indicates how the text should be displayed; other markup languages
+like XML can express the type and structure of the data.
 
 XML is actually a framework for defining different markup languages for
 different kinds of data. For example, XML has been used to define a
@@ -475,10 +476,10 @@ emphasize the distinction in this introductory material.
 
 XML syntax looks much like HTML. For example, an employee record in a
 hypothetical XML-based language might look like the following XML
-*document*, which might be stored in a file named . The first line
-indicates the version of XML being used, and the remaining lines
-represent four fields that make up the employee record, the last of
-which (`hiredate`) contains three subfields. In other words, XML
+*document*, which might be stored in a file named `employee.xml`. The
+first line indicates the version of XML being used, and the remaining
+lines represent four fields that make up the employee record, the last
+of which (`hiredate`) contains three subfields. In other words, XML
 syntax provides for a nested structure of tag/value pairs, which is
 equivalent to a tree structure for the represented data (with
 `employee` as the root). This is similar to XDR, ASN.1, and NDR's
@@ -518,7 +519,7 @@ none-too-surprising name *XML Schema*. An individual schema defined
 using XML Schema is known as an *XML Schema Document* (XSD). The
 following is an XSD for the example; in other words, it defines the
 language to which the example document conforms. It might be stored in a
-file named .
+file named `employee.xsd`.
 
 ```xml
 <?xml version="1.0"?>
@@ -544,10 +545,10 @@ file named .
 </schema>
 ```
 
-This XSD looks superficially similar to our example document , but only
-because XML Schema is itself an XML-based language. There is an obvious
-relationship between this XSD and the document defined above. For
-example,
+This XSD looks superficially similar to our example document
+`employee.xml`, and for good reason: XML Schema is itself an XML-based
+language. There is an obvious relationship between this XSD and the
+document defined above. For example,
 
 ```xml
 <element name="title" type="string"/>
@@ -558,12 +559,12 @@ interpreted as a string. The sequence and nesting of that line in the
 XSD indicate that a `title` field must be the second item in an
 employee record.
 
-Unlike some schema languages, XML Schema provides datatypes such as
-string, integer, decimal, and Boolean. It allows the datatypes to be
-combined in sequences or nested, as in , to create compound data types.
-So an XSD defines more than a syntax; it defines its own abstract data
-model. A document that conforms to the XSD represents a collection of
-data that conforms to the data model.
+Unlike some schema languages, XML Schema provides datatypes such
+as string, integer, decimal, and Boolean. It allows the datatypes to be
+combined in sequences or nested, as in `employee.xsd`, to create
+compound data types. So an XSD defines more than a syntax; it defines
+its own abstract data model. A document that conforms to the XSD
+represents a collection of data that conforms to the data model.
 
 The significance of an XSD defining an abstract data model and not just
 a syntax is that there can be other ways besides XML of representing
@@ -620,18 +621,17 @@ identifies the namespace. For example, the following line assigns
 xmlns:emp="http://www.example.com/employee"
 ```
 
-Any markup from that namespace would be qualified by prefixing it with ,
-as is `title` in the following line:
+Any markup from that namespace would be qualified by prefixing it with
+`emp:` , as is `title` in the following line:
 
 ```xml
 <emp:title>Head Bottle Washer</emp:title>
 ```
 
-is a qualified name, which will not clash with the name `title` from
-some other namespace.
+In other words, `emp:title` is a qualified name, which will not clash
+with the name `title` from some other namespace.
 
 It is remarkable how widely XML is now used in applications that range
 from RPC-style communication among Web-based services to office
-productivity tools to instant messaging. We will see some more of its
-uses in a later chapter. It is certainly one of the core protocols on
-which the upper layers of the Internet now depend.
+productivity tools to instant messaging. It is certainly one of the
+core protocols on which the upper layers of the Internet now depend.

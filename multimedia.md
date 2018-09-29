@@ -1,19 +1,17 @@
 # {{ page.title }}
 
 Multimedia data, comprised of audio, video, and still images, now makes
-up the majority of traffic on the Internet by many estimates. This is a
-relatively recent development—it may be hard to believe now, but there
-was no YouTube before 2005. Part of what has made the widespread
-transmission of multimedia across networks possible is advances in
-compression technology. Because multimedia data is consumed mostly by
-humans using their senses—vision and hearing—and processed by the
-human brain, there are unique challenges to compressing it. You want to
-try to keep the information that is most important to a human, while
-getting rid of anything that doesn't improve the human's perception of
-the visual or auditory experience. Hence, both computer science and the
-study of human perception come into play. In this section, we'll look at
-some of the major efforts in representing and compressing multimedia
-data.
+up the majority of traffic on the Internet. Part of what has made the
+widespread transmission of multimedia across networks possible is
+advances in compression technology. Because multimedia data is
+consumed mostly by humans using their senses—vision and hearing—and
+processed by the human brain, there are unique challenges to
+compressing it. You want to try to keep the information that is most
+important to a human, while getting rid of anything that doesn't
+improve the human's perception of the visual or auditory experience.
+Hence, both computer science and the study of human perception come
+into play. In this section, we'll look at some of the major efforts in
+representing and compressing multimedia data.
 
 The uses of compression are not limited to multimedia data of
 course—for example, you may well have used a utility like `zip` or
@@ -42,7 +40,7 @@ $$
 $$
 
 so if you want to send 24 frames per second, that would be over 1 Gbps.
-That's a lot more than most Internet users can get access to, by a good
+That's a lot more than most Internet users have access to, by a good
 margin. By contrast, modern compression techniques can get a reasonably
 high-quality HDTV signal down to the range of 10 Mbps, a two order of
 magnitude reduction and well within the reach of many broadband users.
@@ -90,8 +88,9 @@ encoding only the changes. For images that have large homogeneous
 regions, this technique is quite effective. For example, it is not
 uncommon that RLE can achieve compression ratios on the order of 8-to-1
 for scanned text images. RLE works well on such files because they often
-contain a large amount of white space that can be removed. In fact, RLE
-is the key compression algorithm used to transmit faxes. However, for
+contain a large amount of white space that can be removed. For those
+old enough to remember the technology, RLE was the key compression
+algorithm used to transmit faxes. However, for
 images with even a small degree of local variation, it is not uncommon
 for compression to actually increase the image byte size, since it takes
 2 bytes to represent a single symbol when that symbol is not repeated.
@@ -162,15 +161,14 @@ on the contents of the data being compressed. In this case, however, the
 dictionary constructed during compression has to be sent along with the
 data so that the decompression half of the algorithm can do its job.
 Exactly how you build an adaptive dictionary has been a subject of
-extensive research; we discuss important papers on the subject at the
-end of this chapter.
+extensive research.
 
 ## Image Representation and Compression (GIF, JPEG)
 
-Given the increase in the use of digital imagery in recent years—this
+Given the ubiquitous use of digital imagery—this
 use was spawned by the invention of graphical displays, not high-speed
 networks—the need for standard representation formats and compression
-algorithms for digital imagery data has grown more and more critical. In
+algorithms for digital imagery data has become essential. In
 response to this need, the ISO defined a digital image format known as
 *JPEG*, named after the Joint Photographic Experts Group that designed
 it. (The "Joint" in JPEG stands for a joint ISO/ITU effort.) JPEG is the
@@ -184,7 +182,7 @@ Before delving into the details of JPEG, we observe that there are quite
 a few steps to get from a digital image to a compressed representation
 of that image that can be transmitted, decompressed, and displayed
 correctly by a receiver. You probably know that digital images are made
-up of pixels (hence, the megapixels quoted in digital camera
+up of pixels (hence, the megapixels quoted in smartphone camera
 advertisements). Each pixel represents one location in the
 two-dimensional grid that makes up the image, and for color images each
 pixel has some numerical value representing a color. There are lots of
@@ -258,7 +256,7 @@ Y = 0.299R + 0.587G + 0.114B
 U = (B-Y) x 0.565
 V =  (R-Y) x 0.713
 ```
-
+The exact values of the
 constants here are not important, as long as the encoder and decoder
 agree on what they are. (The decoder will have to apply the inverse
 transformations to recover the RGB components needed to drive a
@@ -789,7 +787,7 @@ problem would be to use the Differentiated Services techniques described
 in the previous chapter to mark the packets containing I frames with a
 lower drop probability than other packets.
 
-1One final observation is that how you choose to encode video depends on
+One final observation is that how you choose to encode video depends on
 more than just the available network bandwidth. It also depends on the
 application's latency constraints. Once again, an interactive
 application like videoconferencing needs small latencies. The critical
@@ -821,6 +819,52 @@ I P P P P I
 
 would work just fine for interactive videoconferencing.
 
+### Adaptive Video
+
+Because encoding schemes like MPEG allow for a trade-off between the
+bandwidth consumed and the quality of the image, there is an
+opportunity to adapt a video stream to match the available network
+bandwidth. This is effectively what video streaming services like
+Netflix do today.
+
+For starters, let's assume that we have some way to measure the amount
+of free capacity and level of congestion along a path, for example, by
+observing the rate at which packets are successfully arriving at the
+destination. As the available bandwidth fluctuates, we can feed that
+information back to the codec so that it adjusts its coding parameters
+to back off during congestion and to send more aggressively (with a
+higher picture quality) when the network is idle. This is analogous to
+the behavior of TCP, except in the video case we are actually
+modifying the total amount of data sent rather than how long we take
+to send a fixed amount of data, since we don't want to introduce delay
+into a video application.
+
+In the case of video-on-demand services like Netflix, we don't adapt
+the encoding on the fly, but instead we encode a handful of video
+quality levels ahead of time, and save them to files named accordingly.
+The receiver simply changes the file name it requests to match the
+quality its measurements indicate the network will be able to deliver.
+The receiver watches its playback queue, and asks for a higher
+quality encoding when the queue becomes too full and a lower quality
+encoding when the queue becomes too empty.
+
+How does this approach know where in the movie to jump to should
+the requested quality change? In effect, the receiver never asks the
+sender to stream the whole movie, but instead it requests a sequence
+of short movie segments, typically a few seconds long (and always on
+GOP boundary). Each segment is an opportunity to change the quality
+level to match what the network is able to deliver. (It turns out that
+requesting movie chunks also makes it easier to implement *trick
+play*, jumping around from one place to another in the movie.) In
+other words, a movie is typically stored as a set of N $$\times$$ M
+chunks (files): N quality levels for each of M segments.
+
+There's one last detail. Since the receiver is effectively requesting a
+sequence of discrete video chunks by name, the most common approach
+for issuing these requests is to use HTTP. Each chuck is a separate HTTP
+GET request with the URL identifying the specific chunk the receiver
+wants next. This general approach is called *HTTP adaptive streaming*.
+
 ## Audio Compression (MP3)
 
 Not only does MPEG define how video is compressed, but it also defines a
@@ -842,8 +886,7 @@ $$
 $$
 
 By comparison, telephone-quality voice is sampled at a rate of 8 KHz,
-with 8-bit samples, resulting in a bit rate of 64 kbps, which is not
-coincidentally the speed of an ISDN link.
+with 8-bit samples, resulting in a bit rate of 64 kbps.
 
 Clearly, some amount of compression is going to be required to transmit
 CD-quality audio over, say, the 128-kbps capacity of an ISDN data/voice

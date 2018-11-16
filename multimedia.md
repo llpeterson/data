@@ -256,6 +256,7 @@ Y = 0.299R + 0.587G + 0.114B
 U = (B-Y) x 0.565
 V =  (R-Y) x 0.713
 ```
+
 The exact values of the
 constants here are not important, as long as the encoder and decoder
 agree on what they are. (The decoder will have to apply the inverse

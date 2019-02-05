@@ -9,13 +9,12 @@ the data it wants to transmit from the representation it uses internally
 into a message that can be transmitted over the network; that is, the
 data is *encoded* in a message. On the receiving side, the application
 translates this arriving message into a representation that it can then
-process; that is, the message is *decoded*. Encoding is sometimes called
-*argument marshalling*, and decoding is sometimes called
-*unmarshalling*. This terminology comes from the Remote Procedure Call
-(RPC) world, where the client thinks it is invoking a procedure with a
-set of arguments, but these arguments are then "brought together and
-ordered in an appropriate and effective way" to form a network
-message.
+process; that is, the message is *decoded*. This process is sometimes
+called *argument marshalling* or *serialization*. This terminology
+comes from the Remote Procedure Call (RPC) world, where the client
+thinks it is invoking a procedure with a set of arguments, but these
+arguments are then "brought together and ordered in an appropriate and
+effective way" to form a network message.
 
 <figure class="line">
 	<a id="marshal1"></a>
@@ -24,8 +23,8 @@ message.
 	application data.</figcaption>
 </figure>
 
-You might ask what makes this problem challenging enough to warrant a
-name like marshalling. One reason is that computers represent data in
+You might ask what makes this problem challenging.
+One reason is that computers represent data in
 different ways. For example, some computers represent floating-point
 numbers in IEEE standard 754 format, while some older machines still use
 their own nonstandard format. Even for something as simple as integers,
@@ -62,7 +61,7 @@ in the structure differently.
 
 ## Taxonomy
 
-Although argument marshalling is not rocket science is involved—it is
+Although argument marshalling is not rocket science—it is
 a small matter of bit twiddling—there are a surprising number of
 design choices that you must address. We begin by giving a simple
 taxonomy for argument marshalling systems. The following is by no
@@ -243,9 +242,9 @@ flexible. Compiled stubs are more common in practice.
 	outputs client and server stubs.</figcaption>
 </figure>
 
-## Examples (XDR, ASN.1, NDR)
+## Examples (XDR, ASN.1, NDR, ProtoBufs)
 
-We now briefly describe three popular network data representations in
+We now briefly describe four popular network data representations in
 terms of this taxonomy. We use the integer base type to illustrate how
 each system works.
 
@@ -433,6 +432,91 @@ used: 0 means IEEE 754, 1 means VAX, 2 means Cray, and 3 means IBM. The
 final 2 bytes are reserved for future use. Note that, in simple cases
 such as arrays of integers, NDR does the same amount of work as XDR, and
 so it is able to achieve the same performance.
+
+### ProtoBufs
+
+Protocol Buffers (Protobufs, for short) is a language-neutral and
+platform-neutral way of serializing structured data, commonly
+used with gRPC. It uses an tagged strategy with a canonical
+intermediate form, where the stub on both sides is generated from a
+shared `.proto` file. This specification uses a simple C-like syntax,
+as the following example illustrates:
+
+```
+message Person {
+    required string name = 1;
+    required int32 id = 2;
+    optional string email = 3;
+
+    enum PhoneType {
+        MOBILE = 0;
+        HOME = 1;
+        WORK = 2;
+    }
+
+    message PhoneNumber {
+        required string number = 1;
+        optional PhoneType type = 2 [default = HOME];
+    }
+
+    required PhoneNumber phone = 4;
+}
+  ```
+
+where `message` could roughly be interpreted as equivalent to `typedef
+struct` in C. The rest of the example is fairly intuitive, except that
+every field is given a numeric identifier to ensure uniqueness should
+the specification change over time, and each field can be annotated as
+being either `required` or `optional`.
+
+The way Protobufs encodes integers is novel. It uses a technique
+called *varints* (variable length integers) in which each 8-bit byte
+uses the most significant bit to indicate whether there are more bytes
+in the integer, and the lower seven bits to encode the two's
+complement representation of the next group of seven bits in the
+value. The least significant group is first in the serialization.
+
+This means a small integer (less than 128) can be encoded in a single
+byte (e.g., the inteter 2 is encoded as `0000 0010`), while for an integer
+bigger than 128, more bytes are needed. For example, 300 would be
+encoded as
+
+```
+1010 1100 0000 0010
+```
+
+To see this, first drop the most significant bit from each byte, as
+it is there to tell us whether we've reached the end of the integer.
+In this example, the `1` in the most significant bit of the first
+byte indicates there is more than one byte in the varint:
+
+```
+1010 1100 0000 0010
+→ 010 1100  000 0010
+```
+
+Since varints store numbers with the least significant group first,
+you next reverse the two groups of seven bits. Then you concatenate
+them to get your final value:
+
+```
+000 0010  010 1100
+→  000 0010 ++ 010 1100
+→  100101100
+→  256 + 32 + 8 + 4 = 300
+```
+
+For the larger message specification, you can think of the serialized
+byte stream as a collection of key/value pairs, where the key (i.e.,
+tag) has two sub-parts: the unique identifier for the field (i.e.,
+those extra numbers in the example `.proto` file) and the *wire
+type*  of the value (e.g., `Varint` is the one example wire type we
+have seen so far). Other supported wire types include `32-bit` and
+`64-bit` (for fixed-length integers), and `length-delimited` (for
+strings and embedded messages). The latter tells you how many bytes
+long the embedded message (structure) is, but it's another `message`
+specification in the `.proto` file that tells you how to interpret
+those bytes.
 
 ## Markup Languages (XML)
 

@@ -15,7 +15,7 @@ some intelligible way. This involves both translating between machine
 and network byte order and linearizing compound data structures. We
 outlined the design space for presentation formatting and discussed four
 specific mechanisms that fall on different points in this design space:
-XDR, ASN.1, NDR, and the now dominant XML.
+XDR, ASN.1, NDR, Protocol Buffers, and XML.
 
 The second issue is compression, which is concerned with reducing the
 bandwidth required to transmit different types of data. Compression

@@ -477,7 +477,7 @@ complement representation of the next group of seven bits in the
 value. The least significant group is first in the serialization.
 
 This means a small integer (less than 128) can be encoded in a single
-byte (e.g., the inteter 2 is encoded as `0000 0010`), while for an integer
+byte (e.g., the integer 2 is encoded as `0000 0010`), while for an integer
 bigger than 128, more bytes are needed. For example, 365 would be
 encoded as
 

@@ -478,11 +478,11 @@ value. The least significant group is first in the serialization.
 
 This means a small integer (less than 128) can be encoded in a single
 byte (e.g., the inteter 2 is encoded as `0000 0010`), while for an integer
-bigger than 128, more bytes are needed. For example, 300 would be
+bigger than 128, more bytes are needed. For example, 365 would be
 encoded as
 
 ```
-1010 1100 0000 0010
+1110 1101 0000 0010
 ```
 
 To see this, first drop the most significant bit from each byte, as
@@ -491,8 +491,8 @@ In this example, the `1` in the most significant bit of the first
 byte indicates there is more than one byte in the varint:
 
 ```
-1010 1100 0000 0010
-→ 010 1100  000 0010
+1110 1101 0000 0010
+→ 110 1101  000 0010
 ```
 
 Since varints store numbers with the least significant group first,
@@ -500,10 +500,10 @@ you next reverse the two groups of seven bits. Then you concatenate
 them to get your final value:
 
 ```
-000 0010  010 1100
-→  000 0010 ++ 010 1100
-→  100101100
-→  256 + 32 + 8 + 4 = 300
+000 0010  110 1101
+→  000 0010 || 110 1101
+→  101101101
+→  256 + 64 + 32 + 8 + 4 + 1 = 365
 ```
 
 For the larger message specification, you can think of the serialized

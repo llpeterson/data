@@ -820,7 +820,7 @@ I P P P P I
 
 would work just fine for interactive videoconferencing.
 
-### Adaptive Video
+### Adaptive Streaming
 
 Because encoding schemes like MPEG allow for a trade-off between the
 bandwidth consumed and the quality of the image, there is an
@@ -864,7 +864,14 @@ There's one last detail. Since the receiver is effectively requesting a
 sequence of discrete video chunks by name, the most common approach
 for issuing these requests is to use HTTP. Each chuck is a separate HTTP
 GET request with the URL identifying the specific chunk the receiver
-wants next. This general approach is called *HTTP adaptive streaming*.
+wants next. When you start downloading a movie, your video player first
+downloads a *manifest* file that contains nothing more than the URLs
+for the N $$\times$$ M chunks in the movie, and then it issues a
+sequence of HTTP requests using the appropriate URL for the
+situation. This general approach is called *HTTP adaptive streaming*,
+although it has been standardized with different names by various
+organizations, most notably MPEG's DASH (*Dynamic Adaptive Streaming
+over HTTP*) and Apple's HLS (*HTTP Live Streaming*).
 
 ## Audio Compression (MP3)
 

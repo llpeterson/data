@@ -869,7 +869,7 @@ downloads a *manifest* file that contains nothing more than the URLs
 for the N $$\times$$ M chunks in the movie, and then it issues a
 sequence of HTTP requests using the appropriate URL for the
 situation. This general approach is called *HTTP adaptive streaming*,
-although it has been standardized with different names by various
+although it has been standardized in slightly different ways by various
 organizations, most notably MPEG's DASH (*Dynamic Adaptive Streaming
 over HTTP*) and Apple's HLS (*HTTP Live Streaming*).
 

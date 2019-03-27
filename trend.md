@@ -45,12 +45,12 @@ needs only write summaries of the data, not the raw data, back to the
 cloud.)
 
 We introduced the access-edge cloud technology needed to support
-edge-native applications back in Chapter 2, but what is perhaps more
-interesting is to look at a couple examples of edge-native
-applications. As one such example, enterprises in the automotive,
-factory, and warehouse space increasingly want to deploy private 5G
-networks for a variety of *physical automation* use cases. These
-include a garage where a remote valet parks your car or a factory
+edge-native applications back in [Section 2.9](../direct/trend.md),
+but what is perhaps more interesting is to look at a couple examples
+of edge-native applications. As one such example, enterprises in the
+automotive, factory, and warehouse space increasingly want to deploy
+private 5G networks for a variety of *physical automation* use cases.
+These include a garage where a remote valet parks your car or a factory
 floor making use of automation robots. The common theme is high
 bandwidth, low latency connectivity from the robot to intelligence
 sitting nearby in an edge cloud. This drives lower robot costs (you
@@ -70,9 +70,7 @@ are streamed over wireless (possibly after some device preprocessing)
 to a nearby edge-cloud that performs the heavy lifting.  This is a
 human-in-the-loop metaphor, with the “look and feel of augmented
 reality” but implemented by AI algorithms (e.g., computer vision,
-natural language recognition.) More information about prototypes of
-this and similar promising edge-native applications is available at
-http://gabriel.cs.cmu.edu.
+natural language recognition.)
 
 The second factor is that because a network is like many other
 man-made systems, it is possible to collect data about its behavior
@@ -96,7 +94,7 @@ decide where to scale specific network functions and application
 services based on machine learning algorithms that analyze network
 utilization and traffic data patterns.
 
-A second is *Inband Network Telemetry* (INT), a framework to collect
+A second is *In-band Network Telemetry* (INT), a framework to collect
 and report network state, directly in the data plane. This is in
 contrast to the conventional reporting done by the network control
 plane, as typified by the example systems described in Section 9.4. In
@@ -111,10 +109,17 @@ or in special probe packets. Similarly, INT *traffic sinks* retrieve
 allowing the traffic sinks to monitor the exact data plane state that
 the packets “observed” while being forwarded. INT is still
 early-stage, and takes advantage of the programmable pipelines
-described in Section 3.4, but it has the potential to provide a
-qualitatively deeper insights into traffic paterns and the root causes
-of network failures.
+described in [Section 3.4](../internetworking/impl.md), but it has the
+potential to provide a qualitatively deeper insights into traffic
+paterns and the root causes of network failures.
 
 > [!NOTE|label:Broader Perspective]
-> To continue learning about the cloudification of the Internet, see
-> [Blockchain and a Decentralized Internet](../security/trend.md)
+> To continue reading about the cloudification of the Internet, see
+> [Blockchain and a Decentralized Internet](../security/trend.md).
+>
+> To learn more about promising edge-native applications, we 
+> recommend:
+> * [Open Edge Computing Initiative](http://openedgecomputing.org), 2019.
+>
+> To learn more about In-band Network Telemetry, we recommend:
+> * [In-band Network Telemetry via Programmable Dataplanes](https://pdfs.semanticscholar.org/a3f1/9dc8520e2f42673be7cbd8d80cd96e3ec0c1.pdf), August 2015.

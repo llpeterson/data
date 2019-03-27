@@ -45,9 +45,9 @@ needs only write summaries of the data, not the raw data, back to the
 cloud.)
 
 We introduced the access-edge cloud technology needed to support
-edge-native applications back in [Section 2.9](../direct/trend.md),
-but what is perhaps more interesting is to look at a couple examples
-of edge-native applications. As one such example, enterprises in the
+edge-native applications at the end of [Chapter 2](../direct/trend.md),
+but what is perhaps more interesting is to look at some examples of
+edge-native applications. One such example is enterprises in the
 automotive, factory, and warehouse space increasingly want to deploy
 private 5G networks for a variety of *physical automation* use cases.
 These include a garage where a remote valet parks your car or a factory

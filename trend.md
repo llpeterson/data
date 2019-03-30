@@ -16,8 +16,7 @@ there any implications to networking?
 At first blush, networks are purposely designed to be data-agnostic.
 If you collect it and want to ship to somewhere for analysis, the
 network is happy to do that for you. You might compress the data to
-reduce the bandwidth required to transmit it (afterall, the
-presumption is that there will be a lot of it), but otherwise big data
+reduce the bandwidth required to transmit it, but otherwise big data
 is no different than plain old regular data. But this ignores two
 important factors.
 
@@ -34,15 +33,15 @@ Vehicles* and the *Internet-of-Things (IoT)* is potentially
 overwhelming.
 
 While one could imagine dealing with this problem by using one of the
-compression algorithms described in this Chapter, people are instead
-thinking outside the box, and pursuing new applications that reside at
-the edge of the network. These *edge-native applications* both provide
-better sub-millisecond response time and they dramatically reduce the
-volume of data that ultimately needs to be uploaded into the
-cloud. (You can think of this data reduction as application-specific
-compression, but it’s more accurate to say that the edge application
-needs only write summaries of the data, not the raw data, back to the
-cloud.)
+compression algorithms described in [Section 7.2](multimedia.md),
+people are instead thinking outside the box, and pursuing new
+applications that reside at the edge of the network. These
+*edge-native applications* both provide better sub-millisecond
+response time and they dramatically reduce the volume of data that
+ultimately needs to be uploaded into the cloud. You can think of this
+data reduction as application-specific compression, but it’s more
+accurate to say that the edge application needs only write summaries
+of the data, not the raw data, back to the cloud.
 
 We introduced the access-edge cloud technology needed to support
 edge-native applications at the end of [Chapter 2](../direct/trend.md),
@@ -77,41 +76,40 @@ man-made systems, it is possible to collect data about its behavior
 (e.g., performance, failures, traffic patterns), apply analytics
 programs to that data, and use the insights gained to improve the
 network. It should not come as a surprise that this is an active area
-of research, with the goal of building a closed control loop, similar
-to the one shown in the figure. Setting aside the analytics itself,
-which are well outside the scope of this book, the interesting
-questions are (1) what useful data can we collect, and (2) what
-aspects of the network are most promising to control? Let’s look at
-two promising answers.
+of research, with the goal of building a closed control loop. Setting
+aside the analytics itself, which are well outside the scope of this
+book, the interesting questions are (1) what useful data can we
+collect, and (2) what aspects of the network are most promising to
+control? Let’s look at two promising answers.
 
 One is 5G cellular networks, which are inherently complex. They
 include multiple layers of virtual functions, virtual and physical RAN
 assets, spectrum usage, and as we have just discussed, edge computing
-nodes. Network analytics hence will become essential to building a
-flexible 5G network where roll-out and operational complexity is
-simplified. This will include network planning, which will need to
-decide where to scale specific network functions and application
-services based on machine learning algorithms that analyze network
-utilization and traffic data patterns.
+nodes. It is widely expected that network analytics will be essential
+to building a flexible 5G network. This will include network planning,
+which will need to  decide where to scale specific network functions
+and application services based on machine learning algorithms that
+analyze network utilization and traffic data patterns.
 
 A second is *In-band Network Telemetry* (INT), a framework to collect
 and report network state, directly in the data plane. This is in
 contrast to the conventional reporting done by the network control
-plane, as typified by the example systems described in Section 9.4. In
-the INT architecture, packets contain header fields that are
-interpreted as “telemetry instructions” by network devices. These
-instructions tell an INT-capable device what state to collect and
-write into the packet as it transits the network. INT *traffic
-sources* (e.g., applications, end-host networking stacks, VM
-hypervisors) can embed the instructions either in normal data packets
-or in special probe packets. Similarly, INT *traffic sinks* retrieve
-(and optionally report) the collected results of these instructions,
-allowing the traffic sinks to monitor the exact data plane state that
-the packets “observed” while being forwarded. INT is still
-early-stage, and takes advantage of the programmable pipelines
-described in [Section 3.4](../internetworking/impl.md), but it has the
-potential to provide a qualitatively deeper insights into traffic
-paterns and the root causes of network failures.
+plane, as typified by the example systems described in
+[Section 9.3](../applications/infrastructure.md). In the INT
+architecture, packets contain header fields that are interpreted as
+“telemetry instructions” by network devices. These instructions tell
+an INT-capable device what state to collect and write into the packet
+as it transits the network. INT *traffic sources* (e.g., applications,
+end-host networking stacks, VM hypervisors) can embed the instructions
+either in normal data packets or in special probe packets. Similarly,
+INT *traffic sinks* retrieve (and optionally report) the collected
+results of these instructions, allowing the traffic sinks to monitor
+the exact data plane state that the packets “observed” while being
+forwarded. INT is still early-stage, and takes advantage of the
+programmable pipelines described in
+[Section 3.4](../internetworking/impl.md), but it has the potential to
+provide a qualitatively deeper insights into traffic paterns and the
+root causes of network failures.
 
 > [!NOTE|label:Broader Perspective]
 > To continue reading about the cloudification of the Internet, see

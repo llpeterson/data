@@ -16,7 +16,7 @@ thinks it is invoking a procedure with a set of arguments, but these
 arguments are then "brought together and ordered in an appropriate and
 effective way" to form a network message.
 
-<figure class="line">
+<figure>
 	<a id="marshal1"></a>
 	<img src="figures/f07-01-9780123850591.png" width="400px"/>
 	<figcaption>Presentation formatting involves encoding and decoding
@@ -41,7 +41,7 @@ sure how the host you are communicating with stores integers. The
 big-endian and little-endian representations of the integer 34,677,374
 are given in [Figure 2](#endian).
 
-<figure class="line">
+<figure>
 	<a id="endian"></a>
 	<img src="figures/f07-02-9780123850591.png" width="500px"/>
 	<figcaption>Big-endian and little-endian byte order for the integer
@@ -110,7 +110,7 @@ must *serialize* (flatten) complex data structures.
 > a contiguous message that can be transmitted over the network.
 > [Figure 3](#marshal2) illustrates this task.
 
-<figure class="line">
+<figure>
 	<a id="marshal2"></a>
 	<img src="figures/f07-03-9780123850591.png" width="400px"/>
 	<figcaption>Argument marshalling: converting, packing, and
@@ -190,7 +190,7 @@ strategy to specify the architecture on which the data contained in the
 message was generated. [Figure 4](#tags) depicts how a simple 32-bit
 integer might be encoded in a tagged message.
 
-<figure class="line">
+<figure>
 	<a id="tags"></a>
 	<img src="figures/f07-04-9780123850591.png" width="400px"/>
 	<figcaption>A 32-bit integer encoded in a tagged
@@ -236,7 +236,7 @@ description of the procedure's interface. Because it is easy to change
 this description, interpreted stubs have the advantage of being
 flexible. Compiled stubs are more common in practice.
 
-<figure class="line">
+<figure>
 	<a id="stubs"></a>
 	<img src="figures/f07-05-9780123850591.png" width="500px"/>
 	<figcaption>Stub compiler takes interface description as input and
@@ -279,7 +279,7 @@ element/component is represented in a multiple of 4 bytes. Smaller data
 types are padded out to 4 bytes with 0s. The exception to this "pad to
 4 bytes" rule is made for characters, which are encoded one per byte.
 
-<figure class="line">
+<figure>
 	<a id="xdr"></a>
 	<img src="figures/f07-06-9780123850591.png" width="500px"/>
 	<figcaption>Example encoding of a structure in XDR.</figcaption>
@@ -356,14 +356,14 @@ bytes make up the `value`; we discuss `length` more below. Compound
 data types, such as structures, can be constructed by nesting primitive
 types, as illustrated in [Figure 7](#ber1).
 
-<figure class="line">
+<figure>
 	<a id="ber1"></a>
 	<img src="figures/f07-07-9780123850591.png" width="600px"/>
 	<figcaption>Compound types created by means of nesting in ASN.1
 	BER.</figcaption>
 </figure>
 
-<figure class="line">
+<figure>
 	<a id="ber2"></a>
 	<img src="figures/f07-08-9780123850591.png" width="400px"/>
 	<figcaption>ASN.1 BER representation for a 4-byte integer.</figcaption>
@@ -396,7 +396,7 @@ the other 7 bits indicate how many additional bytes make up the
 `length`. [Figure 9](#ber3) illustrates a simple 1-byte `length`
 and a multibyte `length`.
 
-<figure class="line">
+<figure>
 	<a id="ber3"></a>
 	<img src="figures/f07-09-9780123850591.png" width="400px"/>
 	<figcaption>ASN.1 BER representation for length: (a) 1 byte;
@@ -414,7 +414,7 @@ description of a program written in the Interface Definition Language
 (IDL) and generates the necessary stubs. IDL looks pretty much like C,
 and so essentially supports the C-type system.
 
-<figure class="line">
+<figure>
 	<a id="ndr"></a>
 	<img src="figures/f07-10-9780123850591.png" width="600px"/>
 	<figcaption>NDR's architecture tag.</figcaption>

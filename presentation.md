@@ -438,7 +438,7 @@ so it is able to achieve the same performance.
 
 Protocol Buffers (Protobufs, for short) is a language-neutral and
 platform-neutral way of serializing structured data, commonly
-used with gRPC. It uses an tagged strategy with a canonical
+used with gRPC. It uses a tagged strategy with a canonical
 intermediate form, where the stub on both sides is generated from a
 shared `.proto` file. This specification uses a simple C-like syntax,
 as the following example illustrates:

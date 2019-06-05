@@ -395,7 +395,10 @@ each number by the quantum 10 using integer arithmetic,
 yielding 4, 9, 2, 6, and 0. These numbers can each be encoded in
 4 bits rather than the 7 bits needed to encode the original numbers.
 
+<table>
 <a id="quant"></a>
+<tabcaption>Example JPEG Quantization Table.</tabcaption>
+</table>
 
 | Quantum |   |   |   |   |   |   |   |
 |---:|---:|---:|---:|---:|---:|---:|---:|
@@ -407,10 +410,6 @@ yielding 4, 9, 2, 6, and 0. These numbers can each be encoded in
 | 13 | 15 | 17 | 19 | 21 | 23 | 25 | 27 |
 | 15 | 17 | 19 | 21 | 23 | 25 | 27 | 29 |
 | 17 | 19 | 21 | 23 | 25 | 27 | 29 | 31 |
-
-<table>
-<caption>Table 1. Example JPEG Quantization Table.</caption>
-</table>
 
 Rather than using the same quantum for all 64 coefficients, JPEG uses a
 quantization table that gives the quantum to use for each of the
@@ -912,17 +911,16 @@ MPEG addresses this need by defining three levels of compression, as
 enumerated in [Table 2](#mp3). Of these, Layer III, which is more
 widely known as MP3, is the most commonly used.
 
+<table>
 <a id="mp3"></a>
+<tabcaption>MP3 Compression Rates.</tabcaption>
+</table>
 
 | Coding | Bit Rates | Compression Factor |
 |:---:|:---:|:---:|
 | Layer I | 384 kbps | 14 |
 | Layer II | 192 kbps | 18 |
 | Layer III | 128 kbps | 12 |
-
-<table>
-<caption>Table 2. MP3 Compression Rates.</caption>
-</table>
 
 To achieve these compression ratios, MP3 uses techniques that are
 similar to those used by MPEG to compress video. First, it splits the

@@ -264,7 +264,7 @@ SunRPC. In the taxonomy just introduced, XDR
 - Uses compiled stubs
 
 An XDR integer is a 32-bit data item that encodes a C integer. It is
-represented in twos complement notation, with the most significant byte
+represented in twos' complement notation, with the most significant byte
 of the C integer in the first byte of the XDR integer and the least
 significant byte of the C integer in the fourth byte of the XDR integer.
 That is, XDR uses big-endian format for integers. XDR supports both
@@ -373,7 +373,7 @@ If the `value` is 127 or fewer bytes long, then the `length` is
 specified in a single byte. Thus, for example, a 32-bit integer is
 encoded as a 1-byte `type`, a 1-byte `length`, and the 4 bytes that
 encode the integer, as illustrated in [Figure 8](#ber2). The `value`
-itself, in the case of an integer, is represented in twos complement
+itself, in the case of an integer, is represented in twos' complement
 notation and big-endian form, just as in XDR. Keep in mind that, even
 though the `value` of the integer is represented in exactly the same
 way in both XDR and ASN.1, the XDR representation has neither the
@@ -602,9 +602,9 @@ collection of data. Several schema languages have been defined for XML;
 we will focus here on the leading standard, known by the
 none-too-surprising name *XML Schema*. An individual schema defined
 using XML Schema is known as an *XML Schema Document* (XSD). The
-following is an XSD for the example; in other words, it defines the
-language to which the example document conforms. It might be stored in a
-file named `employee.xsd`.
+following is an XSD specification for the example; in other words, it
+defines the language to which the example document conforms. It might
+be stored in a file named `employee.xsd`.
 
 ```xml
 <?xml version="1.0"?>

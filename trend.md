@@ -108,7 +108,7 @@ the exact data plane state that the packets “observed” while being
 forwarded. INT is still early-stage, and takes advantage of the
 programmable pipelines described in
 [Section 3.4](../internetworking/impl.md), but it has the potential to
-provide a qualitatively deeper insights into traffic paterns and the
+provide a qualitatively deeper insights into traffic patterns and the
 root causes of network failures.
 
 > [!NOTE|label:Broader Perspective]

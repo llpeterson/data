@@ -250,7 +250,7 @@ are more common in practice.
    Stub compiler takes interface description as input and outputs client
    and server stubs.
 
-Examples (XDR, ASN.1, NDR, ProtoBufs)
+Examples (XDR, ASN.1, NDR, Protobufs)
 -------------------------------------
 
 We now briefly describe four popular network data representations in
@@ -449,7 +449,7 @@ future use. Note that, in simple cases such as arrays of integers, NDR
 does the same amount of work as XDR, and so it is able to achieve the
 same performance.
 
-ProtoBufs
+Protobufs
 ~~~~~~~~~
 
 Protocol Buffers (Protobufs, for short) provide a language-neutral and
